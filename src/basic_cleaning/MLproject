@@ -1,0 +1,34 @@
+name: basic_cleaning
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      input_artifact:
+        description: Stored input artifact for raw data
+        type: string
+
+      output_artifact:
+        description: Storage for output wandb artifact
+        type: string
+
+      output_type:
+        description: Type of cleaned artifact
+        type: string
+
+      output_description:
+        description: Description for output cleaned artifact
+        type: string
+
+      min_price:
+        description: Min price allowed
+        type: string
+
+      max_price:
+        description:  Max price allowed
+        type: string
+
+
+    command: >-
+        python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --min_price {min_price}  --max_price {max_price} 
