@@ -13,10 +13,7 @@ _steps = [
     "data_check",
     "data_split",
     "train_random_forest",
-    # NOTE: We do not include this in the steps so it is not run by mistake.
-    # You first need to promote a model export to "prod" before you can run this,
-    # then you need to run this step explicitly
-    #    "test_regression_model"
+    "test_regression_model",
 ]
 
 
@@ -111,15 +108,6 @@ def go(config: DictConfig):
                     "output_artifact": "random_forest_export",
                 },
             )
-
-            # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
-            # step
-
-            ##################
-            # Implement here #
-            ##################
-
-            pass
 
         if "test_regression_model" in active_steps:
 

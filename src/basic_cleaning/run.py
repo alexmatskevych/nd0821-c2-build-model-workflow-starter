@@ -6,6 +6,7 @@ import argparse
 import logging
 
 import pandas as pd
+
 import wandb
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -17,13 +18,7 @@ def go(args):
     run = wandb.init(job_type="basic_cleaning")
     run.config.update(args)
 
-    # Download input artifact. This will also log that this script is using this
-    # particular version of the artifact
-    # artifact_local_path = run.use_artifact(args.input_artifact).file()
-
-    ######################
-    # YOUR CODE HERE     #
-    ######################
+    # Download input artifact.
     local_path = wandb.use_artifact("sample.csv:latest").file()
     df = pd.read_csv(local_path)
 
@@ -32,7 +27,7 @@ def go(args):
     max_price = args.max_price
     idx = df["price"].between(min_price, max_price)
     df = df[idx].copy()
-    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    idx = df["longitude"].between(-74.25, -73.50) & df["latitude"].between(40.5, 41.2)
     df = df[idx].copy()
     # Convert last_review to datetime
     df["last_review"] = pd.to_datetime(df["last_review"])
@@ -59,43 +54,43 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--input_artifact",
-        type=str,  ## INSERT TYPE HERE: str, float or int,
-        help="Artifact to download (raw data) from previous step",  ## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Artifact location from previous step",
         required=True,
     )
 
     parser.add_argument(
         "--output_artifact",
-        type=str,  ## INSERT TYPE HERE: str, float or int,
-        help="Where to store cleaned data artifact ",  ## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Where to store cleaned data artifact ",
         required=True,
     )
 
     parser.add_argument(
         "--output_type",
-        type=str,  ## INSERT TYPE HERE: str, float or int,
-        help="Type of output artifact",  ## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Type of output artifact",
         required=True,
     )
 
     parser.add_argument(
         "--output_description",
-        type=str,  ## INSERT TYPE HERE: str, float or int,
-        help="Description for output artifact",  ## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Description for output artifact",
         required=True,
     )
 
     parser.add_argument(
         "--min_price",
-        type=int,  ## INSERT TYPE HERE: str, float or int,
-        help="Minimum allowed price",  ## INSERT DESCRIPTION HERE,
+        type=int,
+        help="Minimum allowed price",
         required=True,
     )
 
     parser.add_argument(
         "--max_price",
-        type=int,  ## INSERT TYPE HERE: str, float or int,
-        help="Maximum allowed price",  ## INSERT DESCRIPTION HERE,
+        type=int,
+        help="Maximum allowed price",
         required=True,
     )
 
